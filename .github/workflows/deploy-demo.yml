@@ -54,14 +54,20 @@ jobs:
       # repository's legacy gh-pages setup. The actions/deploy-pages route needs
       # the github-pages environment, whose branch policy only admits gh-pages,
       # so it cannot be used from a main-branch build.
+      #
+      # The token goes through the environment rather than being interpolated
+      # into the remote URL: a URL-embedded token fails authentication here, and
+      # this also keeps the token out of the process arguments.
       - name: Publish to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd out
           git init -q
-          # Configure inside out/ — set before committing, or the runner's
-          # unset identity aborts the commit.
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
           git add -A
           git commit -q -m "Deploy demo from ${GITHUB_SHA}"
-          git push -q --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)" \
+            push --force origin HEAD:gh-pages
