@@ -14,7 +14,8 @@
     "dev": "tsx scripts/dev.ts",
     "build": "next build",
     "start": "tsx scripts/dev.ts start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:demo": "tsx scripts/build-demo.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",

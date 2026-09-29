@@ -18,9 +18,14 @@ export default async function SettingsPage() {
   let kitHealth: KitHealth = { ...location, health: null, auth: null };
 
   if (location.installed) {
+    // Pass the selected deployment through, otherwise the auth card below
+    // reports the kit's default host and a user who just switched to
+    // Robinhood would be told their credentials are missing from a host they
+    // are no longer using.
+    const host = settings.kit.host || undefined;
     const [healthResult, authResult, systemResult] = await Promise.allSettled([
       health(),
-      authStatus(),
+      authStatus({ host }),
       systemStatus(),
     ]);
     kitHealth = {

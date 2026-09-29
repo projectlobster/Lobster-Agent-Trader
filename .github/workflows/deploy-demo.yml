@@ -1,0 +1,62 @@
+name: Deploy demo to GitHub Pages
+
+# GitHub Pages can only host static files, so this publishes the landing page
+# as a product demo. The console is NOT part of it — that needs a Node server,
+# a Python process for the agent kit, and a writable SQLite file, none of which
+# Pages provides. See README for how to run the console yourself.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/app/page.tsx"
+      - "src/app/layout.tsx"
+      - "src/app/globals.css"
+      - "src/components/site/**"
+      - "src/components/ui/**"
+      - "src/lib/load-env.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "next.config.ts"
+      - "postcss.config.mjs"
+      - ".github/workflows/deploy-demo.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the static demo
+        run: npm run build:demo
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

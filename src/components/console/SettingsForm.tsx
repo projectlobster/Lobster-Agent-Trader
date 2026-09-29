@@ -637,6 +637,7 @@ export function SettingsForm({
         <SelectField
           label="Deployment"
           value={draft.kit.host}
+          hint="API keys and account indices are per-deployment, so switching to another network means switching your credential bundle too. This value is passed to the kit as LIGHTER_HOST, which takes precedence over the host in your credentials file."
           onChange={(event) =>
             patch((next) => {
               next.kit.host = event.target.value;
