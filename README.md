@@ -16,6 +16,35 @@ allowance ledger → market snapshot → LLM decision → guardrails → order �
 
 ---
 
+## Screenshots
+
+**The landing page**
+
+![Landing](docs/screenshots/01-landing.png)
+
+**The console — allowance, spend, and P&L in one strip**
+
+![Dashboard](docs/screenshots/02-dashboard.png)
+
+**Every decision leaves a record — including the ones the guardrails stopped**
+
+![Runs](docs/screenshots/03-runs.png)
+
+**Engine controls and the three locks that gate live trading**
+
+![Agent](docs/screenshots/04-agent.png)
+
+**Dark theme**
+
+| Dashboard | Agent |
+|---|---|
+| ![Dashboard dark](docs/screenshots/05-dashboard-dark.png) | ![Agent dark](docs/screenshots/06-agent-dark.png) |
+
+<sub>Captured in paper mode against a local install, so the figures are sample data rather than a
+live account.</sub>
+
+---
+
 ## Quick start
 
 ```bash
