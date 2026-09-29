@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+/* Display type is Clash Grotesk, loaded from Fontshare's official CDN in
+   layout.tsx. Fontshare's licence covers use in a site but not redistributing
+   the font files, so the woff2 is deliberately not vendored here. Space Grotesk
+   (self-hosted via next/font) is the fallback, which also keeps the app looking
+   right offline or if the CDN request is removed. To self-host instead, drop
+   ClashGrotesk-Variable.woff2 in public/fonts/ and swap the @font-face in.
+*/
+
+:root {
+  color-scheme: light;
+
+  --canvas: #f2f0f3;
+  --ink: #12101c;
+  --ink-muted: #5f5b6b;
+  --ink-subtle: #8d8997;
+
+  --surface: #ffffff;
+  --line: rgb(18 16 28 / 0.1);
+  --line-control: rgb(18 16 28 / 0.16);
+
+  --accent: #3a2ed0;
+
+  --panel: #0e0b1a;
+  --panel-fg: #f2f0f3;
+  --panel-fg-muted: rgb(242 240 243 / 0.62);
+  --panel-fg-label: rgb(242 240 243 / 0.45);
+  --panel-code: #8ef0dd;
+
+  --plate: #0e0b1a;
+
+  --tint-cyan: #7ff0e2;
+  --tint-mint: #d7f6c6;
+  --tint-mint-strong: #2c7a43;
+  --tint-yellow: #f6e7a6;
+  --tint-yellow-strong: #8a5b00;
+  --tint-blue: #ccd8ff;
+  --tint-fg: #12101c;
+  --tint-blue-fg: #1b2a8c;
+
+  --positive: #15803d;
+  --negative: #c0342b;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #0e0b1a;
+  --ink: #f2f0f3;
+  --ink-muted: #a9a5b8;
+  --ink-subtle: #7e7a90;
+
+  --surface: #17142a;
+  --line: rgb(242 240 243 / 0.12);
+  --line-control: rgb(242 240 243 / 0.19);
+
+  --accent: #9a92ff;
+
+  --panel: #05030f;
+  --panel-fg: #f2f0f3;
+  --panel-fg-muted: rgb(242 240 243 / 0.62);
+  --panel-fg-label: rgb(242 240 243 / 0.45);
+  --panel-code: #8ef0dd;
+
+  --plate: #05030f;
+
+  /* Tint blocks intentionally stay bright in both themes, exactly as they are in
+     the light theme, so text on them can stay a single dark ink (--tint-fg).
+     Only the strong variants are theme-specific because they sit on the dark
+     panel. */
+  --tint-mint-strong: #8ff0b0;
+  --tint-yellow-strong: #f5c451;
+
+  --positive: #4ade80;
+  --negative: #f0776c;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-line-control: var(--line-control);
+
+  --color-accent: var(--accent);
+
+  --color-panel: var(--panel);
+  --color-panel-fg: var(--panel-fg);
+  --color-panel-fg-muted: var(--panel-fg-muted);
+  --color-panel-fg-label: var(--panel-fg-label);
+  --color-panel-code: var(--panel-code);
+
+  --color-plate: var(--plate);
+
+  --color-tint-cyan: var(--tint-cyan);
+  --color-tint-mint: var(--tint-mint);
+  --color-tint-mint-strong: var(--tint-mint-strong);
+  --color-tint-yellow: var(--tint-yellow);
+  --color-tint-yellow-strong: var(--tint-yellow-strong);
+  --color-tint-blue: var(--tint-blue);
+  --color-tint-fg: var(--tint-fg);
+  --color-tint-blue-fg: var(--tint-blue-fg);
+
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+
+  --font-sans: "Clash Grotesk", var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --text-hero: clamp(2.5rem, 6.4vw, 4.25rem);
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.032em;
+
+  --text-display: clamp(2rem, 4.4vw, 3rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.028em;
+
+  --text-h1: 2rem;
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.024em;
+
+  --text-h2: clamp(1.5rem, 3vw, 2.125rem);
+  --text-h2--line-height: 1.14;
+  --text-h2--letter-spacing: -0.022em;
+
+  --text-h2-cta: clamp(1.75rem, 4vw, 2.75rem);
+  --text-h2-cta--line-height: 1.1;
+  --text-h2-cta--letter-spacing: -0.026em;
+
+  --text-card-title: 1.0625rem;
+  --text-card-title--line-height: 1.3;
+  --text-card-title--letter-spacing: -0.012em;
+
+  --text-lede: 1.0625rem;
+  --text-lede--line-height: 1.5;
+  --text-lede-lg: 1.1875rem;
+  --text-lede-lg--line-height: 1.55;
+
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.55;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5;
+  --text-body-xs: 0.8125rem;
+  --text-body-xs--line-height: 1.5;
+
+  --text-label: 0.8125rem;
+  --text-label-sm: 0.6875rem;
+  --text-label-xs: 0.625rem;
+  --text-mono-xs: 0.6875rem;
+
+  --radius-button: 2px;
+
+  --animate-sweep: sweep 1.15s cubic-bezier(0.4, 0, 0.2, 1) 1;
+  --animate-lights: lights 1.6s ease-in-out infinite;
+  --animate-blink: blink 1.1s steps(2, start) infinite;
+}
+
+@keyframes sweep {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(400%);
+  }
+}
+
+@keyframes lights {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: "Clash Grotesk", var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--tint-cyan);
+    color: var(--tint-fg);
+  }
+}
+
+@utility page-measure {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility pixel-tile {
+  background-image:
+    linear-gradient(to right, rgb(242 240 243 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(242 240 243 / 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}

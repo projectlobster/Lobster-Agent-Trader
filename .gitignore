@@ -1,0 +1,63 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build output
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# local runtime data — the SQLite ledger and paper account state
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# secrets — never commit any of these
+.env
+.env.local
+.env.*.local
+*.env
+key.md
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+secrets/
+*credentials.json
+*credentials.yml
+id_rsa
+id_ed25519
+.npmrc
+.netrc
+
+# The real credentials file lives outside the repo, but a stray copy must never
+# be committed. Anchored to the repo root so it cannot swallow source files such
+# as src/lib/kit/credentials.ts.
+/credentials
+/*.credentials
+
+# project-scoped lighter-agent-kit install (cloned by `npm run setup`)
+.agents/skills/
+.agents/.vendor/
+.vendor/
+
+# local scratch
+.preview/
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# agent tooling state, not part of the project
+.commandcode/
+.agents/
