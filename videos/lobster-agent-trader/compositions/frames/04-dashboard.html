@@ -1,0 +1,317 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2') format('woff2');
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('assets/fonts/797e433ab948586e-s.p.0r6juujl39pe6.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+
+    #root {
+      --cream: #f2f0f3;
+      --ink: #12101c;
+      --ink-2: #2a2a2a;
+      --mint: #7ff0e2;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+    }
+
+    #root * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .clip {
+      position: absolute;
+      inset: 0;
+    }
+
+    #p04-ground {
+      background: var(--cream);
+    }
+
+    /* faint ink rule field — quiet texture, never a gradient */
+    #p04-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.05;
+      background-image:
+        linear-gradient(to right, var(--ink) 2px, transparent 2px),
+        linear-gradient(to bottom, var(--ink) 2px, transparent 2px);
+      background-size: 6.5cqw 6.5cqw;
+    }
+
+    /* the camera: the whole stage scales 1.00 → 1.06 across the frame.
+       no CSS transform here — GSAP owns this element's transform outright. */
+    #p04-push {
+      transform-origin: 50% 50%;
+    }
+
+    /* ——— frame-chrome topbar ——— */
+    #p04-topbar {
+      position: absolute;
+      left: 5cqw;
+      right: 5cqw;
+      top: 4cqw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #p04-section {
+      font-family: "Geist Mono", monospace;
+      font-size: 1.55cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
+    #p04-pill {
+      font-family: "Geist Mono", monospace;
+      font-size: 1.55cqw;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--cream);
+      border: 0.2cqw solid var(--ink);
+      border-radius: 999px;
+      padding: 0.55cqw 1.5cqw;
+    }
+
+    /* ——— kicker-block: the inverted ink eyebrow chip ——— */
+    #p04-kicker {
+      position: absolute;
+      left: 5cqw;
+      top: 9.6cqw;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: "Geist Mono", monospace;
+      font-size: 1.7cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.6cqw 1.1cqw;
+    }
+
+    /* ——— the capture, whole ———
+       The previous build rebuilt the strip as six separately-cropped tiles
+       whose geometry depended on a `--s` scale derived from the panel's own
+       box; once that box moved, two tiles fell outside their windows and came
+       out empty. The screenshot is the evidence, so it is shown as one object
+       at its natural aspect. */
+    #p04-plate {
+      position: absolute;
+      left: 5cqw;
+      top: 26cqw;
+      width: 90cqw;
+      background: #fff;
+      border: 0.4cqw solid var(--ink);
+      box-shadow: 1.1cqw 1.1cqw 0 var(--ink);
+      overflow: hidden;
+    }
+    #p04-plate img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ——— annotations ——— */
+    #p04-note {
+      position: absolute;
+      left: 5cqw;
+      top: 50cqw;
+      font-family: "Geist Mono", monospace;
+      font-size: 1.55cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
+    /* the outer box holds the brand's fixed −4deg; GSAP animates the inner
+       one so the two never fight over `transform` */
+    #p04-badge-rot {
+      position: absolute;
+      right: 5cqw;
+      top: 48.4cqw;
+      transform: rotate(-4deg);
+    }
+    #p04-badge {
+      background: var(--mint);
+      border: 0.4cqw solid var(--ink);
+      padding: 0.8cqw 1.6cqw;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 2.6cqw;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    /* ——— meta footer (sits above the caption keep-out) ——— */
+    #p04-meta {
+      position: absolute;
+      left: 5cqw;
+      right: 5cqw;
+      top: 58cqw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Geist Mono", monospace;
+      font-size: 1.45cqw;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+    #p04-meta-dot {
+      display: inline-block;
+      width: 0.5cqw;
+      height: 0.5cqw;
+      border-radius: 50%;
+      background: var(--ink);
+      margin: 0 0.6cqw;
+      vertical-align: middle;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="04-dashboard"
+    data-start="0"
+    data-duration="4.8"
+    data-width="1080"
+    data-height="1080"
+  >
+    <!-- full-bleed ground: dedicated .clip layer, lowest track -->
+    <div
+      class="clip"
+      id="p04-ground"
+      data-start="0"
+      data-duration="4.8"
+      data-track-index="0"
+    >
+      <div id="p04-grid" aria-hidden="true"></div>
+    </div>
+
+    <div
+      class="clip"
+      id="p04-push"
+      data-start="0"
+      data-duration="4.8"
+      data-track-index="1"
+    >
+      <!-- frame-chrome topbar -->
+      <div id="p04-topbar">
+        <div id="p04-section">Lobster Agent Trader</div>
+        <div id="p04-pill">Real capture</div>
+      </div>
+
+      <div id="p04-kicker">The dashboard</div>
+
+      <!-- THE REAL CAPTURE. Pixels from assets/metrics-row.png, never
+           redrawn: the console's own six metric tiles. -->
+      <div id="p04-plate">
+        <img
+          src="assets/metrics-row.png"
+          alt="Agent dashboard: tradable allowance, spent, allowance utilisation, equity, total P&L and P&L per 1M tokens"
+        />
+      </div>
+
+      <div id="p04-note">Six tiles · one screen</div>
+
+      <div id="p04-badge-rot">
+        <div id="p04-badge">Not a mockup</div>
+      </div>
+
+      <div id="p04-meta">
+        <div>Evidence</div>
+        <div><span id="p04-meta-dot"></span>04 &nbsp;•&nbsp; 07</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var D = 4.8;
+
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines["04-dashboard"] = tl;
+
+      // ——— the camera: one slow, constant push across the whole frame ———
+      tl.fromTo(
+        "#p04-push",
+        { scale: 1 },
+        { scale: 1.06, duration: D, ease: "none" },
+        0
+      );
+
+      // ——— Scene 1 (0.0 → ~0.7s): name the shot ———
+      tl.fromTo(
+        "#p04-section",
+        { opacity: 0, x: -14 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
+        0
+      );
+      tl.fromTo(
+        "#p04-pill",
+        { opacity: 0, x: 14 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
+        0.06
+      );
+      tl.fromTo(
+        "#p04-kicker",
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        0.12
+      );
+
+      // ——— Scene 2 (~0.2 → 4.0s): the screen itself ———
+      // One plate, one reveal. The six tiles are inside the capture, so they
+      // arrive together the way they do in the real product.
+      tl.fromTo(
+        "#p04-plate",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+        0.22
+      );
+
+      // ——— Scene 3 (~3.9 → 4.8s): the proof lands last ———
+      tl.fromTo(
+        "#p04-note",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        3.55
+      );
+      tl.fromTo(
+        "#p04-badge",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" },
+        3.7
+      );
+      tl.fromTo(
+        "#p04-meta",
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        3.85
+      );
+
+      // hold the timeline open for the full frame
+      tl.to({}, { duration: D }, 0);
+
+      tl.seek(0);
+    })();
+  </script>
+</template>

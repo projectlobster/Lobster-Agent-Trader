@@ -1,0 +1,92 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2') format('woff2');
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: block;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .cap {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 7%;
+      text-align: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #12101c;
+      background: #f2f0f3;
+      border-bottom: 3px solid #7ff0e2;
+      padding: 10px 18px;
+      opacity: 0;
+    }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1080" data-duration="30.295">
+      <div class="cap" data-start="0.04" data-duration="1.01">Every month, you</div>
+      <div class="cap" data-start="1.05" data-duration="0.42">pay for</div>
+      <div class="cap" data-start="1.47" data-duration="0.54">a million</div>
+      <div class="cap" data-start="2.03" data-duration="0.61">tokens and</div>
+      <div class="cap" data-start="2.64" data-duration="0.72">quietly use</div>
+      <div class="cap" data-start="3.36" data-duration="0.47">a fraction</div>
+      <div class="cap" data-start="3.83" data-duration="0.33">of them.</div>
+      <div class="cap" data-start="4.317" data-duration="0.41">The rest</div>
+      <div class="cap" data-start="4.727" data-duration="0.46">does not</div>
+      <div class="cap" data-start="5.187" data-duration="0.68">roll over,</div>
+      <div class="cap" data-start="5.917" data-duration="0.49">does not</div>
+      <div class="cap" data-start="6.407" data-duration="0.63">cash out,</div>
+      <div class="cap" data-start="7.037" data-duration="0.3">and never</div>
+      <div class="cap" data-start="7.337" data-duration="0.6">warns you on</div>
+      <div class="cap" data-start="7.937" data-duration="0.57">the way out.</div>
+      <div class="cap" data-start="8.638" data-duration="1.21">Lobster Agent Trader</div>
+      <div class="cap" data-start="9.998" data-duration="0.86">gives that remainder</div>
+      <div class="cap" data-start="10.858" data-duration="0.48">a ledger</div>
+      <div class="cap" data-start="11.438" data-duration="0.32">and a</div>
+      <div class="cap" data-start="11.758" data-duration="0.84">ceiling and</div>
+      <div class="cap" data-start="12.598" data-duration="0.28">runs a</div>
+      <div class="cap" data-start="12.878" data-duration="0.75">disciplined loop</div>
+      <div class="cap" data-start="13.698" data-duration="0.33">on it.</div>
+      <div class="cap" data-start="14.128" data-duration="0.21">Here is</div>
+      <div class="cap" data-start="14.338" data-duration="1.02">the allowance, what</div>
+      <div class="cap" data-start="15.358" data-duration="0.49">has been</div>
+      <div class="cap" data-start="15.848" data-duration="0.73">spent, and</div>
+      <div class="cap" data-start="16.578" data-duration="0.38">the P&amp;L</div>
+      <div class="cap" data-start="17.058" data-duration="0.8">it produced all</div>
+      <div class="cap" data-start="17.858" data-duration="0.83">on one screen.</div>
+      <div class="cap" data-start="18.878" data-duration="1.2">Every decision leaves</div>
+      <div class="cap" data-start="20.078" data-duration="0.96">a record, including</div>
+      <div class="cap" data-start="21.038" data-duration="0.55">the ones the</div>
+      <div class="cap" data-start="21.588" data-duration="1.215">guardrail stopped. Live</div>
+      <div class="cap" data-start="22.903" data-duration="1.94">trading needs three independent</div>
+      <div class="cap" data-start="24.843" data-duration="0.89">unlocks and the</div>
+      <div class="cap" data-start="25.733" data-duration="1.21">guardrails clamp rather</div>
+      <div class="cap" data-start="26.943" data-duration="0.84">than scale up.</div>
+      <div class="cap" data-start="27.752" data-duration="1.09">Self hosted, bring</div>
+      <div class="cap" data-start="28.842" data-duration="0.87">your own keys on</div>
+      <div class="cap" data-start="29.712" data-duration="0.58">GitHub.</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var total = 30.295;
+      var tl = gsap.timeline({ paused: true });
+      var caps = document.querySelectorAll(".cap");
+      caps.forEach(function (el) {
+        var s = parseFloat(el.getAttribute("data-start"));
+        var d = parseFloat(el.getAttribute("data-duration"));
+        var dur = Math.max(0.2, d);
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.12, overwrite: "auto" }, s);
+        tl.set(el, { opacity: 0, visibility: "hidden" }, s + dur + 0.12);
+      });
+      tl.to({}, { duration: total }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["captions"] = tl;
+    })();
+  </script>
+</template>

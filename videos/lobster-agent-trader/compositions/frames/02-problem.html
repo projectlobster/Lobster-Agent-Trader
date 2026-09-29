@@ -1,0 +1,406 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2') format('woff2');
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+  </style>
+
+  <style>
+    /* ——— tokens (frame.md creative-mode) ——— */
+    #root {
+      --cream: #f2f0f3;
+      --cream-2: #b2f6ee;
+      --ink: #12101c;
+      --ink-2: #2a2a2a;
+      --ink-muted: #5f5b6b;
+      --ink-subtle: #8d8997;
+      --green: #129787;
+      --pink: #74e89f;
+      --orange: #15803d;
+      --yellow: #7ff0e2;
+      --frame-pad: 3.3cqw;
+      --gutter: 5cqw;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      /* NO background here — the full-bleed ground rides a .clip layer. */
+    }
+
+    #root * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ——— layers ——— */
+    .clip {
+      position: absolute;
+      inset: 0;
+    }
+
+    #p02-ground {
+      background: var(--cream);
+    }
+
+    /* faint ink rule field — quiet texture, never a gradient */
+    #p02-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.055;
+      background-image:
+        linear-gradient(to right, var(--ink) 2px, transparent 2px),
+        linear-gradient(to bottom, var(--ink) 2px, transparent 2px);
+      background-size: 6.5cqw 6.5cqw;
+    }
+
+    #p02-content {
+      display: flex;
+      flex-direction: column;
+      font-family: sans-serif;
+      color: var(--ink);
+    }
+
+    /* ——— frame-chrome: mono topbar ——— */
+    #p02-topbar {
+      position: absolute;
+      top: 2.5cqw;
+      left: var(--frame-pad);
+      right: var(--frame-pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #p02-section {
+      font-family: monospace;
+      font-size: 1.55cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
+    #p02-pill {
+      font-family: monospace;
+      font-size: 1.55cqw;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--cream);
+      border: 0.2cqw solid var(--ink);
+      border-radius: 999px;
+      padding: 0.55cqw 1.5cqw;
+    }
+
+    /* ——— kicker-block: the inverted ink eyebrow chip ——— */
+    #p02-kicker {
+      position: absolute;
+      top: 11.5cqw;
+      left: var(--frame-pad);
+      background: var(--ink);
+      color: var(--cream);
+      font-family: monospace;
+      font-size: 1.7cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.5cqw 1cqw;
+    }
+
+    /* ——— hero: the same counter, dimmed ——— */
+    #p02-counter-wrap {
+      position: absolute;
+      top: 17cqw;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    #p02-counter {
+      position: relative;
+      width: 100%;
+    }
+
+    #p02-num {
+      /* display-xl voice: heavy, uppercase, tight */
+      font-weight: 900;
+      font-size: 12.2cqw;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+    }
+
+    /* the strikethrough that "dims" the counter — drawn by GSAP scaleX only */
+    #p02-strike {
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      top: 52%;
+      height: 1.1cqw;
+      background: var(--orange);
+      transform-origin: 0% 50%;
+    }
+
+    #p02-counter-label {
+      margin-top: 1.6cqw;
+      font-family: monospace;
+      font-size: 1.7cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      /* --ink-subtle is ink at 40%, which lands at 3:1 on the canvas — short of
+         the 4.5:1 floor for body text. The muted token is the right idea at a
+         heavier weight. */
+      color: var(--ink-muted);
+    }
+
+    /* ——— annotation: three quiet non-features, one per voiceover beat ——— */
+    #p02-notes {
+      position: absolute;
+      top: 52cqw;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      gap: 2.2cqw;
+    }
+
+    .p02-note {
+      flex: 1 1 0;
+      border: 0.4cqw solid var(--ink);
+      background: var(--cream);
+      padding: 2.2cqw 2cqw 2cqw;
+      display: flex;
+      flex-direction: column;
+      gap: 1.3cqw;
+    }
+
+    .p02-note-q {
+      font-family: monospace;
+      font-size: 1.6cqw;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      line-height: 1.3;
+    }
+
+    /* the "NO." — a small yellow hard block with ink reading on top
+       (the caption signature). The block is a real element so GSAP can
+       animate it; the label is centred over it. The scale is applied to a
+       background span so the glyphs never get squashed. */
+    .p02-no-block {
+      position: relative;
+      align-self: flex-start;
+    }
+
+    .p02-no-bg {
+      position: absolute;
+      left: -0.22em;
+      right: -0.28em;
+      top: 0;
+      bottom: 0;
+      background: var(--yellow);
+      transform-origin: 0% 50%;
+    }
+
+    .p02-no-label {
+      position: relative;
+      font-weight: 900;
+      font-size: 3.4cqw;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding: 0.15em 0.28em 0.2em 0.22em;
+    }
+
+    /* ——— meta footer (sits above the caption keep-out) ——— */
+    #p02-meta {
+      position: absolute;
+      top: 76cqw;
+      left: var(--frame-pad);
+      right: var(--frame-pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 1.45cqw;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    #p02-meta-dot {
+      display: inline-block;
+      width: 0.5cqw;
+      height: 0.5cqw;
+      border-radius: 50%;
+      background: var(--ink);
+      margin: 0 0.6cqw;
+      vertical-align: middle;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="02-problem"
+    data-start="0"
+    data-duration="4.931"
+    data-width="1080"
+    data-height="1080"
+  >
+    <!-- full-bleed ground: dedicated .clip layer, lowest track -->
+    <div
+      class="clip"
+      id="p02-ground"
+      data-start="0"
+      data-duration="4.931"
+      data-track-index="0"
+    >
+      <div id="p02-grid" aria-hidden="true"></div>
+    </div>
+
+    <div
+      class="clip"
+      id="p02-content"
+      data-start="0"
+      data-duration="4.931"
+      data-track-index="1"
+    >
+      <!-- frame-chrome topbar -->
+      <div id="p02-topbar">
+        <div id="p02-section">Lobster Agent Trader</div>
+        <div id="p02-pill">Tokens / Month</div>
+      </div>
+
+      <!-- kicker-block -->
+      <div id="p02-kicker">The rest</div>
+
+      <!-- hero: the same counter, dimmed -->
+      <div id="p02-counter-wrap">
+        <div id="p02-counter">
+          <div id="p02-num">1,000,000</div>
+          <div id="p02-strike" aria-hidden="true"></div>
+        </div>
+        <div id="p02-counter-label">And it just sits there</div>
+      </div>
+
+      <!-- the three non-features, named plainly -->
+      <div id="p02-notes">
+        <div class="p02-note" id="p02-note-1">
+          <div class="p02-note-q">Rolls over?</div>
+          <div class="p02-no-block" id="p02-no-1">
+            <span class="p02-no-bg" id="p02-no-bg-1"></span>
+            <span class="p02-no-label">No.</span>
+          </div>
+        </div>
+        <div class="p02-note" id="p02-note-2">
+          <div class="p02-note-q">Cashes out?</div>
+          <div class="p02-no-block" id="p02-no-2">
+            <span class="p02-no-bg" id="p02-no-bg-2"></span>
+            <span class="p02-no-label">No.</span>
+          </div>
+        </div>
+        <div class="p02-note" id="p02-note-3">
+          <div class="p02-note-q">Warns you on the way out?</div>
+          <div class="p02-no-block" id="p02-no-3">
+            <span class="p02-no-bg" id="p02-no-bg-3"></span>
+            <span class="p02-no-label">No.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- meta footer, kept above the caption band -->
+      <div id="p02-meta">
+        <div>The problem</div>
+        <div><span id="p02-meta-dot"></span>02 &nbsp;•&nbsp; 07</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var D = 4.331;
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      // ——— Scene 1 (0.0–1.4s): the same counter, dimmed ———
+      tl.fromTo(
+        "#p02-num",
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" },
+        0
+      );
+      tl.fromTo(
+        "#p02-counter-label",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        0.3
+      );
+      tl.fromTo(
+        "#p02-kicker",
+        { opacity: 0, x: -14 },
+        { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" },
+        0.34
+      );
+      // the strikethrough draws across the counter — the "dimmed" beat
+      tl.fromTo(
+        "#p02-strike",
+        { scaleX: 0, opacity: 0.9 },
+        { scaleX: 1, duration: 0.5, ease: "power2.inOut" },
+        0.85
+      );
+
+      // ——— Scene 2: three negatives, one per voiceover cue ———
+      var beats = [
+        { sel: "#p02-note-1", bg: "#p02-no-bg-1", at: 1.45 },  // "does not roll over"
+        { sel: "#p02-note-2", bg: "#p02-no-bg-2", at: 2.35 },  // "does not cash out"
+        { sel: "#p02-note-3", bg: "#p02-no-bg-3", at: 3.2 },   // "never warns you on the way out"
+      ];
+      beats.forEach(function (b) {
+        tl.fromTo(
+          b.sel,
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+          b.at
+        );
+        // the yellow hard block wipes in under each "NO."
+        tl.fromTo(
+          b.bg,
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.4, ease: "power2.out" },
+          b.at + 0.18
+        );
+      });
+
+      // ——— meta footer settles late ———
+      tl.fromTo(
+        "#p02-meta",
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+        3.6
+      );
+
+      // ——— a quiet, continuous settle under the whole shot ———
+      tl.to("#p02-counter", { y: -6, duration: D, ease: "none" }, 0);
+      tl.to({}, { duration: D }, 0);
+
+      window.__timelines["02-problem"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

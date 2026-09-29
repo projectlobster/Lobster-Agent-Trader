@@ -1,0 +1,368 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2') format('woff2');
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+  </style>
+
+  <style>
+    /* Brand faces. The project stages its .woff2 files into assets/fonts/ (shared across
+       every frame) — the names below are the project convention; the monospace stack falls
+       back to a generic mono so the address line still reads as monospace if a file is
+       missing. No network @import, no uninstalled family. */
+    @font-face {
+      font-family: "Space Grotesk";
+      src: url("assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2") format("woff2"),
+           url("assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Space Grotesk";
+      src: url("assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2") format("woff2"),
+           url("assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Geist Mono";
+      src: url("assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2") format("woff2"),
+           url("assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+
+    /* frame root — styled by ID, never by a class (subcomposition_root_styled_by_class) */
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      color: #12101c;
+    }
+
+    /* full-bleed ground rides on its own clip layer, never on #root */
+    .f07-close-ground {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: #f2f0f3;
+    }
+    .f07-close-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ---- site chrome: hairline rules + muted mono labels ---- */
+    .f07-close-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .f07-close-topbar {
+      top: 40px;
+      padding-bottom: 13px;
+      border-bottom: 1px solid rgba(18, 16, 28, 0.14);
+    }
+    .f07-close-footbar {
+      top: 812px;
+      padding-top: 13px;
+      border-top: 1px solid rgba(18, 16, 28, 0.14);
+    }
+    .f07-close-chip {
+      display: inline-block;
+      font-family: "Geist Mono", ui-monospace, monospace;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5f5b6b;
+      white-space: nowrap;
+    }
+
+    /* ---- the framed stage ---- */
+    .f07-close-plate {
+      position: absolute;
+      left: 64px;
+      top: 168px;
+      width: 952px;
+      /* Sized to the lockup plus breathing room. At 640px the box was far
+         taller than its contents, so the centred stack read as a small cluster
+         marooned at the top of an empty panel. */
+      height: 430px;
+      border: 1px solid rgba(18, 16, 28, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .f07-close-stack {
+      /* The lockup lives on its own timeline layer, a sibling of the framed
+         plate rather than a child of it — so the plate's flex centring never
+         reached it and the lockup sat at the top of an empty panel. Position it
+         against the plate's box directly. */
+      position: absolute;
+      left: 64px;
+      top: 168px;
+      width: 952px;
+      height: 430px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ---- the real exported brand mark: capture/assets/svgs/logo-fd328552.svg, its three
+           paths inlined verbatim (ink / mint tint / ink at 40% opacity) ---- */
+    .f07-close-markwrap {
+      width: 89px;
+      height: 96px;
+      display: block;
+    }
+    .f07-close-mark {
+      width: 89px;
+      height: 96px;
+      display: block;
+      overflow: visible;
+    }
+    .f07-close-mark path {
+      fill: #12101c;
+    }
+    .f07-close-mark path:nth-of-type(2) {
+      fill: #7ff0e2;
+    }
+    .f07-close-mark path:nth-of-type(3) {
+      fill-opacity: 0.4;
+    }
+
+    /* ---- wordmark: set as text in the brand's sans, never outlined ---- */
+    .f07-close-word {
+      margin: 34px 0 0;
+      display: flex;
+      align-items: baseline;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #12101c;
+    }
+    .f07-close-wordgrp {
+      display: inline-block;
+      white-space: nowrap;
+      margin-right: 0.26em;
+    }
+    .f07-close-wordgrp:last-child {
+      margin-right: 0;
+    }
+    .f07-close-l {
+      display: inline-block;
+      white-space: pre;
+    }
+
+    /* ---- repository address ---- */
+    .f07-close-addrwrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 545px;
+      height: 26px;
+      margin-top: 26px;
+    }
+    .f07-close-addr {
+      font-family: "Geist Mono", ui-monospace, monospace;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: #5f5b6b;
+      white-space: nowrap;
+    }
+    .f07-close-caret {
+      display: inline-block;
+      width: 2px;
+      height: 20px;
+      margin-left: 3px;
+      background: #12101c;
+    }
+
+    /* ---- the frame's single accent: a mint hairline under the address ---- */
+    .f07-close-rule {
+      width: 240px;
+      height: 2px;
+      margin-top: 16px;
+      background: #7ff0e2;
+      transform-origin: left center;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="07-close"
+    data-start="0"
+    data-duration="2.603"
+    data-width="1080"
+    data-height="1080"
+  >
+    <div
+      class="clip f07-close-ground"
+      data-start="0"
+      data-duration="2.603"
+      data-track-index="0"
+    ></div>
+
+    <div
+      class="clip f07-close-layer"
+      data-start="0"
+      data-duration="2.603"
+      data-track-index="1"
+    >
+      <div class="f07-close-bar f07-close-topbar">
+        <span class="f07-close-chip">the repository</span>
+        <span class="f07-close-chip">07 / 07</span>
+      </div>
+      <div class="f07-close-plate"></div>
+      <div class="f07-close-bar f07-close-footbar">
+        <span class="f07-close-chip">clone &middot; configure &middot; run</span>
+      </div>
+    </div>
+
+    <div
+      class="clip f07-close-layer"
+      data-start="0"
+      data-duration="2.603"
+      data-track-index="2"
+    >
+      <div class="f07-close-stack">
+        <div class="f07-close-markwrap" id="f07-close-markwrap">
+          <svg
+            class="f07-close-mark"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 26"
+            aria-hidden="true"
+            focusable="false"
+          ><path d="M12 0.8 L23 6.9 L12 13 L1 6.9 Z"></path><path d="M1 11.4 L12 17.5 L23 11.4 L23 14.6 L12 20.7 L1 14.6 Z"></path><path d="M1 18 L12 24.1 L23 18 L23 19.6 L12 25.7 L1 19.6 Z"></path></svg>
+        </div>
+
+        <h1 class="f07-close-word">
+          <span class="f07-close-wordgrp"><span class="f07-close-l">L</span><span class="f07-close-l">o</span><span class="f07-close-l">b</span><span class="f07-close-l">s</span><span class="f07-close-l">t</span><span class="f07-close-l">e</span><span class="f07-close-l">r</span></span><span class="f07-close-wordgrp"><span class="f07-close-l">A</span><span class="f07-close-l">g</span><span class="f07-close-l">e</span><span class="f07-close-l">n</span><span class="f07-close-l">t</span></span><span class="f07-close-wordgrp"><span class="f07-close-l">T</span><span class="f07-close-l">r</span><span class="f07-close-l">a</span><span class="f07-close-l">d</span><span class="f07-close-l">e</span><span class="f07-close-l">r</span></span>
+        </h1>
+
+        <div class="f07-close-addrwrap">
+          <span class="f07-close-addr" id="f07-close-addr"></span><span
+            class="f07-close-caret"
+            id="f07-close-caret"
+          ></span>
+        </div>
+
+        <div class="f07-close-rule" id="f07-close-rule"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+
+      var DURATION = 2.603;
+      var ADDRESS = "github.com/projectlobster/Lobster-Agent-Trader";
+
+      var mark = document.querySelector("#f07-close-markwrap");
+      var letters = document.querySelectorAll(".f07-close-l");
+      var rule = document.querySelector("#f07-close-rule");
+      var addrEl = document.querySelector("#f07-close-addr");
+      var caret = document.querySelector("#f07-close-caret");
+      var frame = document.querySelectorAll(".f07-close-bar, .f07-close-plate");
+      var chips = document.querySelectorAll(".f07-close-chip");
+
+      var tl = gsap.timeline({ paused: true });
+
+      // Scene 1 — the stage is prepared: the hairline stage + mono chrome settle in.
+      tl.fromTo(
+        frame,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.45, ease: "power2.out", stagger: 0.08 },
+        0.06,
+      );
+      tl.fromTo(
+        chips,
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", stagger: 0.06 },
+        0.16,
+      );
+
+      // Scene 2a — whole-mark spring BLOOM from zero at the lockup's centre.
+      tl.fromTo(
+        mark,
+        { scale: 0, opacity: 0, rotation: -9 },
+        { scale: 1, opacity: 1, rotation: 0, duration: 0.5, ease: "back.out(1.9)" },
+        0.04,
+      );
+
+      // Scene 2b — the wordmark cascades in beside it, letter by letter, left to right.
+      tl.fromTo(
+        letters,
+        { opacity: 0, y: 14, scaleY: 0.86 },
+        { opacity: 1, y: 0, scaleY: 1, duration: 0.18, ease: "back.out(1.8)", stagger: 0.012 },
+        0.5,
+      );
+
+      // Scene 3 — the address types on beneath the lockup, while the mint hairline draws.
+      var type = { v: 0 };
+      tl.to(
+        type,
+        {
+          v: ADDRESS.length,
+          duration: 0.58,
+          ease: "power1.inOut",
+          onUpdate: function () {
+            addrEl.textContent = ADDRESS.substring(0, Math.floor(type.v));
+          },
+        },
+        0.92,
+      );
+
+      // block cursor — deterministic sin square wave on the timeline, never a CSS animation
+      var blink = { p: 0 };
+      tl.to(
+        blink,
+        {
+          p: Math.PI * 2 * 1.7,
+          duration: 0.58,
+          ease: "none",
+          onUpdate: function () {
+            caret.style.opacity = Math.sin(blink.p) > 0 ? "1" : "0";
+          },
+        },
+        0.92,
+      );
+      tl.to(caret, { opacity: 0, duration: 0.1, ease: "none" }, 1.5);
+
+      // the single accent: a mint hairline sweeps left to right beneath the address
+      tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.48, ease: "power3.inOut" }, 1.02);
+
+      // full-span anchor so the sub-composition timeline covers the whole frame
+      tl.to({}, { duration: DURATION }, 0);
+
+      window.__timelines["07-close"] = tl;
+    })();
+  </script>
+</template>

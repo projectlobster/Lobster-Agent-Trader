@@ -1,0 +1,561 @@
+{
+  "bgm": null,
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.267,
+      "words": [
+        {
+          "text": "Every",
+          "start": 0.04,
+          "end": 0.35
+        },
+        {
+          "text": "month,",
+          "start": 0.35,
+          "end": 0.84
+        },
+        {
+          "text": "you",
+          "start": 0.84,
+          "end": 1.05
+        },
+        {
+          "text": "pay",
+          "start": 1.05,
+          "end": 1.26
+        },
+        {
+          "text": "for",
+          "start": 1.26,
+          "end": 1.47
+        },
+        {
+          "text": "a",
+          "start": 1.47,
+          "end": 1.54
+        },
+        {
+          "text": "million",
+          "start": 1.54,
+          "end": 2.01
+        },
+        {
+          "text": "tokens",
+          "start": 2.03,
+          "end": 2.26
+        },
+        {
+          "text": "and",
+          "start": 2.55,
+          "end": 2.64
+        },
+        {
+          "text": "quietly",
+          "start": 2.64,
+          "end": 3.16
+        },
+        {
+          "text": "use",
+          "start": 3.16,
+          "end": 3.36
+        },
+        {
+          "text": "a",
+          "start": 3.36,
+          "end": 3.41
+        },
+        {
+          "text": "fraction",
+          "start": 3.41,
+          "end": 3.83
+        },
+        {
+          "text": "of",
+          "start": 3.83,
+          "end": 3.92
+        },
+        {
+          "text": "them.",
+          "start": 3.92,
+          "end": 4.16
+        }
+      ]
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 4.331,
+      "words": [
+        {
+          "text": "The",
+          "start": 0.05,
+          "end": 0.2
+        },
+        {
+          "text": "rest",
+          "start": 0.2,
+          "end": 0.46
+        },
+        {
+          "text": "does",
+          "start": 0.46,
+          "end": 0.67
+        },
+        {
+          "text": "not",
+          "start": 0.73,
+          "end": 0.92
+        },
+        {
+          "text": "roll",
+          "start": 0.92,
+          "end": 1.15
+        },
+        {
+          "text": "over,",
+          "start": 1.15,
+          "end": 1.6
+        },
+        {
+          "text": "does",
+          "start": 1.65,
+          "end": 1.91
+        },
+        {
+          "text": "not",
+          "start": 1.91,
+          "end": 2.14
+        },
+        {
+          "text": "cash",
+          "start": 2.14,
+          "end": 2.45
+        },
+        {
+          "text": "out,",
+          "start": 2.45,
+          "end": 2.77
+        },
+        {
+          "text": "and",
+          "start": 2.77,
+          "end": 2.88
+        },
+        {
+          "text": "never",
+          "start": 2.88,
+          "end": 3.07
+        },
+        {
+          "text": "warns",
+          "start": 3.07,
+          "end": 3.42
+        },
+        {
+          "text": "you",
+          "start": 3.42,
+          "end": 3.56
+        },
+        {
+          "text": "on",
+          "start": 3.56,
+          "end": 3.67
+        },
+        {
+          "text": "the",
+          "start": 3.67,
+          "end": 3.83
+        },
+        {
+          "text": "way",
+          "start": 3.83,
+          "end": 4
+        },
+        {
+          "text": "out.",
+          "start": 4,
+          "end": 4.24
+        }
+      ]
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 5.44,
+      "words": [
+        {
+          "text": "Lobster",
+          "start": 0.04,
+          "end": 0.51
+        },
+        {
+          "text": "Agent",
+          "start": 0.51,
+          "end": 0.88
+        },
+        {
+          "text": "Trader",
+          "start": 0.88,
+          "end": 1.25
+        },
+        {
+          "text": "gives",
+          "start": 1.4,
+          "end": 1.59
+        },
+        {
+          "text": "that",
+          "start": 1.59,
+          "end": 1.72
+        },
+        {
+          "text": "remainder",
+          "start": 1.79,
+          "end": 2.26
+        },
+        {
+          "text": "a",
+          "start": 2.26,
+          "end": 2.33
+        },
+        {
+          "text": "ledger",
+          "start": 2.33,
+          "end": 2.74
+        },
+        {
+          "text": "and",
+          "start": 2.84,
+          "end": 3.07
+        },
+        {
+          "text": "a",
+          "start": 3.07,
+          "end": 3.16
+        },
+        {
+          "text": "ceiling",
+          "start": 3.16,
+          "end": 3.4
+        },
+        {
+          "text": "and",
+          "start": 3.88,
+          "end": 4
+        },
+        {
+          "text": "runs",
+          "start": 4,
+          "end": 4.23
+        },
+        {
+          "text": "a",
+          "start": 4.23,
+          "end": 4.28
+        },
+        {
+          "text": "disciplined",
+          "start": 4.28,
+          "end": 4.84
+        },
+        {
+          "text": "loop",
+          "start": 4.84,
+          "end": 5.03
+        },
+        {
+          "text": "on",
+          "start": 5.1,
+          "end": 5.22
+        },
+        {
+          "text": "it.",
+          "start": 5.22,
+          "end": 5.43
+        }
+      ]
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 4.8,
+      "words": [
+        {
+          "text": "Here",
+          "start": 0.09,
+          "end": 0.2
+        },
+        {
+          "text": "is",
+          "start": 0.2,
+          "end": 0.3
+        },
+        {
+          "text": "the",
+          "start": 0.3,
+          "end": 0.45
+        },
+        {
+          "text": "allowance,",
+          "start": 0.45,
+          "end": 1.02
+        },
+        {
+          "text": "what",
+          "start": 1.09,
+          "end": 1.32
+        },
+        {
+          "text": "has",
+          "start": 1.32,
+          "end": 1.53
+        },
+        {
+          "text": "been",
+          "start": 1.53,
+          "end": 1.81
+        },
+        {
+          "text": "spent,",
+          "start": 1.81,
+          "end": 2.32
+        },
+        {
+          "text": "and",
+          "start": 2.32,
+          "end": 2.54
+        },
+        {
+          "text": "the",
+          "start": 2.54,
+          "end": 2.75
+        },
+        {
+          "text": "P&L",
+          "start": 2.76,
+          "end": 2.92
+        },
+        {
+          "text": "it",
+          "start": 3.02,
+          "end": 3.12
+        },
+        {
+          "text": "produced",
+          "start": 3.12,
+          "end": 3.38
+        },
+        {
+          "text": "all",
+          "start": 3.65,
+          "end": 3.82
+        },
+        {
+          "text": "on",
+          "start": 3.82,
+          "end": 3.96
+        },
+        {
+          "text": "one",
+          "start": 3.96,
+          "end": 4.18
+        },
+        {
+          "text": "screen.",
+          "start": 4.18,
+          "end": 4.65
+        }
+      ]
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.755,
+      "words": [
+        {
+          "text": "Every",
+          "start": 0.04,
+          "end": 0.33
+        },
+        {
+          "text": "decision",
+          "start": 0.33,
+          "end": 0.85
+        },
+        {
+          "text": "leaves",
+          "start": 0.85,
+          "end": 1.24
+        },
+        {
+          "text": "a",
+          "start": 1.24,
+          "end": 1.25
+        },
+        {
+          "text": "record,",
+          "start": 1.31,
+          "end": 1.8
+        },
+        {
+          "text": "including",
+          "start": 1.8,
+          "end": 2.2
+        },
+        {
+          "text": "the",
+          "start": 2.2,
+          "end": 2.38
+        },
+        {
+          "text": "ones",
+          "start": 2.38,
+          "end": 2.59
+        },
+        {
+          "text": "the",
+          "start": 2.65,
+          "end": 2.75
+        },
+        {
+          "text": "guardrail",
+          "start": 2.75,
+          "end": 3.16
+        },
+        {
+          "text": "stopped.",
+          "start": 3.16,
+          "end": 3.5
+        }
+      ]
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 5.099,
+      "words": [
+        {
+          "text": "Live",
+          "start": 0.05,
+          "end": 0.21
+        },
+        {
+          "text": "trading",
+          "start": 0.31,
+          "end": 0.78
+        },
+        {
+          "text": "needs",
+          "start": 0.78,
+          "end": 1.13
+        },
+        {
+          "text": "three",
+          "start": 1.13,
+          "end": 1.48
+        },
+        {
+          "text": "independent",
+          "start": 1.48,
+          "end": 2.25
+        },
+        {
+          "text": "unlocks",
+          "start": 2.25,
+          "end": 2.48
+        },
+        {
+          "text": "and",
+          "start": 2.85,
+          "end": 2.97
+        },
+        {
+          "text": "the",
+          "start": 2.97,
+          "end": 3.14
+        },
+        {
+          "text": "guardrails",
+          "start": 3.14,
+          "end": 3.67
+        },
+        {
+          "text": "clamp",
+          "start": 3.71,
+          "end": 4
+        },
+        {
+          "text": "rather",
+          "start": 4,
+          "end": 4.35
+        },
+        {
+          "text": "than",
+          "start": 4.35,
+          "end": 4.58
+        },
+        {
+          "text": "scale",
+          "start": 4.58,
+          "end": 4.87
+        },
+        {
+          "text": "up.",
+          "start": 4.87,
+          "end": 5.19
+        }
+      ]
+    },
+    {
+      "frame": 7,
+      "path": "assets/voice/07.wav",
+      "duration_s": 2.603,
+      "words": [
+        {
+          "text": "Self",
+          "start": 0.06,
+          "end": 0.22
+        },
+        {
+          "text": "hosted,",
+          "start": 0.28,
+          "end": 0.81
+        },
+        {
+          "text": "bring",
+          "start": 0.86,
+          "end": 1.15
+        },
+        {
+          "text": "your",
+          "start": 1.15,
+          "end": 1.35
+        },
+        {
+          "text": "own",
+          "start": 1.42,
+          "end": 1.62
+        },
+        {
+          "text": "keys",
+          "start": 1.62,
+          "end": 1.89
+        },
+        {
+          "text": "on",
+          "start": 1.89,
+          "end": 2.02
+        },
+        {
+          "text": "GitHub.",
+          "start": 2.02,
+          "end": 2.6
+        }
+      ]
+    }
+  ],
+  "sfx": []
+}

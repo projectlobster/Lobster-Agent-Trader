@@ -61,3 +61,11 @@ Thumbs.db
 # agent tooling state, not part of the project
 .commandcode/
 .agents/
+
+# video project — build output and node_modules, not source
+videos/*/node_modules/
+videos/*/.hyperframes/
+videos/*/renders/
+videos/*/snapshots/
+videos/*/out/
+videos/*/capture/screenshots/

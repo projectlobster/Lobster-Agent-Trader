@@ -1,0 +1,559 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('assets/fonts/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2') format('woff2');
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('assets/fonts/797e433ab948586e-s.p.0r6juujl39pe6.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+  </style>
+
+  <style>
+    /* ——— frame.md creative-mode tokens ———
+       Only Space Grotesk + Geist Mono ship with this project, so every family
+       named below resolves to a real staged .woff2. */
+    #root {
+      --cream: #f2f0f3;
+      --cream-2: #b2f6ee;
+      --ink: #12101c;
+      --ink-2: #2a2a2a;
+      --pink: #74e89f;
+      --orange: #15803d;
+      --yellow: #7ff0e2;
+
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #root * {
+      box-sizing: border-box;
+    }
+
+    /* ——— full-bleed ground, on its own clip layer ——— */
+    .f05-runs-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--cream);
+    }
+
+    /* flat ink rule lattice: no gradient fill, no blur, no glow */
+    .f05-runs-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(
+          to right,
+          rgba(18, 16, 28, 0.055) 0 1px,
+          transparent 1px 100%
+        ),
+        linear-gradient(to bottom, rgba(18, 16, 28, 0.055) 0 1px, transparent 1px 100%);
+      background-size: 108px 108px;
+    }
+
+    .f05-runs-stage {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* ——— topbar chrome ——— */
+    .f05-runs-topbar {
+      position: absolute;
+      left: 56px;
+      top: 50px;
+      width: 968px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f05-runs-sect {
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    /* the one rounded element on the frame */
+    .f05-runs-pill {
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 7px 17px 6px;
+    }
+
+    /* ——— hero plate: the REAL captured console ——— */
+    .f05-runs-plate {
+      position: absolute;
+      left: 56px;
+      top: 112px;
+      width: 968px;
+      height: 334px;
+      border: 4px solid var(--ink);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .f05-runs-tablewrap {
+      position: absolute;
+      left: 0;
+      top: 46px;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+
+    /* native 1920px width: the GSAP scale alone governs final size */
+    .f05-runs-shot {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: auto;
+      display: block;
+    }
+
+    /* live mono head row, sitting over the capture's own header band */
+    .f05-runs-platehead {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 42px;
+      background: var(--cream);
+      border-bottom: 4px solid var(--ink);
+      display: flex;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .f05-runs-col {
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding-left: 13px;
+      white-space: nowrap;
+    }
+
+    /* scanline running the length of the ledger as it populates */
+    .f05-runs-scan {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--pink);
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      opacity: 0;
+      z-index: 2;
+    }
+
+    /* per-row reveal masks — the captured pixels are uncovered, never redrawn */
+    .f05-runs-mask {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background: var(--cream);
+      opacity: 1;
+      z-index: 1;
+    }
+
+    /* ——— the three outcome reads ——— */
+    .f05-runs-rail {
+      position: absolute;
+      left: 56px;
+      top: 466px;
+      width: 968px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .f05-runs-read {
+      flex: 1 1 0;
+      height: 230px;
+      border: 4px solid var(--ink);
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--cream);
+    }
+
+    .f05-runs-read-ok {
+      background: var(--cream-2);
+    }
+
+    .f05-runs-kick {
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .f05-runs-stat {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .f05-runs-lbl {
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      line-height: 1.4;
+    }
+
+    /* the ONE hard offset shadow on the frame, riding the plate's corner */
+    .f05-runs-marker {
+      position: absolute;
+      left: 744px;
+      top: 82px;
+      background: var(--pink);
+      border: 4px solid var(--ink);
+      box-shadow: 12px 12px 0 var(--orange), 12px 12px 0 1px var(--ink);
+      padding: 11px 20px 12px;
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    /* ——— footer: the REAL captured outcomes panel ——— */
+    .f05-runs-ledger {
+      position: absolute;
+      left: 56px;
+      top: 720px;
+      width: 968px;
+      height: 94px;
+      border: 4px solid var(--ink);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .f05-runs-ledgershot {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: auto;
+      display: block;
+    }
+
+    .f05-runs-rule {
+      position: absolute;
+      height: 4px;
+      background: var(--pink);
+      transform-origin: left center;
+      opacity: 0;
+    }
+
+    .f05-runs-tag {
+      position: absolute;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--yellow);
+      border: 2px solid var(--ink);
+      padding: 4px 9px 3px;
+      white-space: nowrap;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-runs" data-width="1080" data-height="1080" data-duration="4.255">
+    <!-- full-bleed ground lives on its own clip layer, never on #root -->
+    <div class="clip f05-runs-bg" data-start="0" data-duration="4.255" data-track-index="0"></div>
+
+    <div class="clip f05-runs-stage" data-start="0" data-duration="4.255" data-track-index="1">
+      <div class="f05-runs-topbar">
+        <div class="f05-runs-sect">Audit trail</div>
+        <div class="f05-runs-pill">Live ledger</div>
+      </div>
+
+      <!-- hero: the real captured runs table -->
+      <div class="f05-runs-plate">
+        <div class="f05-runs-tablewrap" id="f05-runs-wrap">
+          <img class="f05-runs-shot" id="f05-runs-shot" src="capture/assets/runs-table.png" alt="Runs ledger" />
+          <div class="f05-runs-scan" id="f05-runs-scan"></div>
+        </div>
+      </div>
+
+      <!-- three outcome reads -->
+      <div class="f05-runs-rail">
+        <div class="f05-runs-read f05-runs-read-ok" id="f05-runs-card-ok">
+          <div class="f05-runs-kick">Executed</div>
+          <div class="f05-runs-stat">OK</div>
+          <div class="f05-runs-lbl">Row fills in, cost logs against it</div>
+        </div>
+
+        <div class="f05-runs-read" id="f05-runs-card-blocked">
+          <div class="f05-runs-kick">Refused</div>
+          <div class="f05-runs-stat">Blocked</div>
+          <div class="f05-runs-lbl">Guardrail holds, reason on file</div>
+        </div>
+
+        <div class="f05-runs-read" id="f05-runs-card-error">
+          <div class="f05-runs-kick">Failed</div>
+          <div class="f05-runs-stat">Error</div>
+          <div class="f05-runs-lbl">Provider text kept verbatim</div>
+        </div>
+      </div>
+
+      <!-- footer: the real captured outcomes strip -->
+      <div class="f05-runs-ledger" id="f05-runs-ledger">
+        <img
+          class="f05-runs-ledgershot"
+          id="f05-runs-ledgershot"
+          src="capture/assets/outcomes-strip.png"
+          alt="Decision outcomes"
+        />
+        <div class="f05-runs-rule" id="f05-runs-rule-blocked"></div>
+        <div class="f05-runs-rule" id="f05-runs-rule-error"></div>
+        <div class="f05-runs-tag" id="f05-runs-tag">All counted</div>
+      </div>
+
+      <!-- the one featured marker, riding the plate's corner -->
+      <div class="f05-runs-marker" id="f05-runs-marker">Ledgered</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+
+      /* ——— geometry measured off the real captures ———
+         runs-table.png is 1920x560. The console card spans x 329..1590 and
+         y 26..419; its header band is y 14..51; eight 46px rows follow
+         (y 52..419). The plate's inner width is 960px, so the card is scaled
+         by 960/1261 = 0.7613 and its empty left margin (329px) is cropped,
+         letting the real console fill the plate edge to edge. */
+      var CARD_X0 = 329;
+      var CARD_X1 = 1590;
+      var INNER = 960;
+      var SCALE = INNER / (CARD_X1 - CARD_X0); // 0.7613
+      var CROP_X = CARD_X0 * SCALE; // 250.5px
+      var ROW_TOP = 52 * SCALE; // 39.6px — first row, below the header band
+      var ROW_H = 46 * SCALE; // 35.0px
+      var ROWS = 8;
+
+      /* Row-by-row resolve: one mask per row band, opaque at rest. Each row is
+         uncovered when the voiceover reaches it, so the captured pixels are
+         revealed by a moving edge rather than redrawn. */
+      var wrap = document.getElementById('f05-runs-wrap');
+      var masks = [];
+      for (var i = 0; i < ROWS; i++) {
+        var m = document.createElement('div');
+        m.className = 'f05-runs-mask';
+        m.style.top = (ROW_TOP + i * ROW_H).toFixed(2) + 'px';
+        m.style.height = (ROW_H + 0.6).toFixed(2) + 'px';
+        m.style.opacity = '1';
+        wrap.appendChild(m);
+        masks.push(m);
+      }
+
+      /* live mono head row, so the capture reads as a console panel */
+      var head = document.createElement('div');
+      head.className = 'f05-runs-platehead';
+      var widths = ['72px', '80px', '96px', '96px', '96px', '92px', '88px'];
+      ['When', 'Mode', 'Status', 'Action', 'Symbol', 'Tokens', 'Cost', 'Note'].forEach(function (label, idx) {
+        var c = document.createElement('div');
+        c.className = 'f05-runs-col';
+        c.textContent = label;
+        if (idx < widths.length) {
+          c.style.flex = '0 0 auto';
+          c.style.width = widths[idx];
+        } else {
+          c.style.flex = '1 1 auto';
+        }
+        head.appendChild(c);
+      });
+      document.querySelector('.f05-runs-plate').appendChild(head);
+
+      /* ——— footer strip geometry (outcomes-strip.png 1920x140) ———
+         Card spans x 329..1591, y 26..139. "DECISION OUTCOMES" label at
+         y 50..57; the counts row at y 80..89. Label clusters measured:
+         BLOCKED x350-410, ERROR x436-483, OK x509-545, SKIPPED x572-632.
+         Both overlays use the same scale/crop as the strip image. */
+      var S = SCALE;
+      function stripX(px) {
+        return px * S - CROP_X;
+      }
+      function stripY(px) {
+        return px * S - 26 * S;
+      }
+
+      gsap.set('#f05-runs-shot', {
+        x: -CROP_X,
+        y: -ROW_TOP,
+        scale: SCALE,
+        transformOrigin: '0 0',
+      });
+      gsap.set('#f05-runs-ledgershot', {
+        x: -CROP_X,
+        y: -26 * S,
+        scale: S,
+        transformOrigin: '0 0',
+      });
+
+      var blockedRule = document.getElementById('f05-runs-rule-blocked');
+      var errorRule = document.getElementById('f05-runs-rule-error');
+      var tag = document.getElementById('f05-runs-tag');
+
+      blockedRule.style.left = stripX(348).toFixed(1) + 'px';
+      blockedRule.style.top = stripY(94).toFixed(1) + 'px';
+      blockedRule.style.width = (64 * S).toFixed(1) + 'px';
+
+      errorRule.style.left = stripX(434).toFixed(1) + 'px';
+      errorRule.style.top = stripY(94).toFixed(1) + 'px';
+      errorRule.style.width = (51 * S).toFixed(1) + 'px';
+
+      tag.style.left = stripX(578).toFixed(1) + 'px';
+      tag.style.top = stripY(32).toFixed(1) + 'px';
+
+      var scan = document.getElementById('f05-runs-scan');
+
+      /* ==================== timeline — VO-paced, no front-loading ====================
+         VO (3.755s): "Every decision leaves a record — including the ones the
+         guardrails stopped."
+
+         0.00  hero plate lands (visible well before t=0.5s)
+         0.30  scanline runs the ledger
+         0.34  rows resolve one at a time, through 1.60
+         1.62  "leaves a record" — the featured marker
+         1.98  "every decision" — the three reads arrive left to right
+         2.50  the real tally strip rises
+         2.78  the real counts get called out on the strip                */
+
+      /* 0.00 — hero plate lands */
+      tl.fromTo(
+        '.f05-runs-plate',
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+        0
+      );
+      tl.fromTo(
+        '#f05-runs-shot',
+        { opacity: 0, scale: SCALE * 1.03, x: -CROP_X, y: -ROW_TOP },
+        { opacity: 1, scale: SCALE, x: -CROP_X, y: -ROW_TOP, duration: 0.5, ease: 'power2.out' },
+        0
+      );
+      tl.fromTo('.f05-runs-platehead', { opacity: 0 }, { opacity: 1, duration: 0.26, ease: 'none' }, 0.14);
+
+      /* scanline runs the length of the ledger as it populates */
+      tl.fromTo(scan, { opacity: 0 }, { opacity: 1, duration: 0.1, ease: 'none' }, 0.3);
+      tl.fromTo(
+        scan,
+        { y: ROW_TOP },
+        { y: ROW_TOP + ROWS * ROW_H, duration: 1.42, ease: 'none' },
+        0.3
+      );
+      tl.to(scan, { opacity: 0, duration: 0.16, ease: 'none' }, 1.78);
+
+      /* rows resolve one at a time — the shot's signature sequence */
+      var rowTimes = [0.34, 0.5, 0.66, 0.84, 1.0, 1.16, 1.32, 1.46];
+      masks.forEach(function (mask, idx) {
+        var t = rowTimes[idx];
+        tl.fromTo(mask, { opacity: 1, y: 0 }, { opacity: 0, duration: 0.14, ease: 'power1.out' }, t);
+        tl.to(mask, { y: -ROW_H, duration: 0.14, ease: 'power1.inOut' }, t);
+      });
+
+      /* 1.62 — "leaves a record": the featured marker */
+      tl.fromTo(
+        '#f05-runs-marker',
+        { opacity: 0, scale: 0.62, rotation: -8 },
+        { opacity: 1, scale: 1, rotation: -4, duration: 0.34, ease: 'back.out(2)' },
+        1.62
+      );
+
+      /* 1.98 — "every decision": the three reads arrive left to right.
+         The blocked read gets the longest beat — it is the point of the frame. */
+      tl.fromTo(
+        '#f05-runs-card-ok',
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' },
+        1.98
+      );
+      tl.fromTo(
+        '#f05-runs-card-blocked',
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out' },
+        2.3
+      );
+      tl.fromTo(
+        '#f05-runs-card-error',
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out' },
+        2.96
+      );
+
+      /* 2.50 — the real tally strip rises under the rail */
+      tl.fromTo(
+        '#f05-runs-ledger',
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.34, ease: 'power2.out' },
+        2.5
+      );
+      tl.fromTo('#f05-runs-ledgershot', { opacity: 0 }, { opacity: 1, duration: 0.28, ease: 'none' }, 2.56);
+
+      /* 2.78 / 3.08 — the real counts get called out on the strip */
+      tl.fromTo(
+        blockedRule,
+        { opacity: 0, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.22, ease: 'power2.out' },
+        2.78
+      );
+      tl.fromTo(
+        errorRule,
+        { opacity: 0, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.24, ease: 'power2.out' },
+        3.08
+      );
+      tl.fromTo(tag, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.26, ease: 'power2.out' }, 3.3);
+
+      /* Hold the landed frame through the tail the injector left past the VO. */
+      tl.to({}, { duration: 0.5 }, 3.56);
+
+      window.__timelines["05-runs"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

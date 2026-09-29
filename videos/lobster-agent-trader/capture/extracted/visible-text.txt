@@ -1,0 +1,257 @@
+[span] Lobster Agent Trader
+[button] DARK
+[a] Open Console
+[a] Dashboard
+[a] Settings
+[button] How it works
+[p] how it works · 01 / 04
+[button] CLOSE
+[p] Step 01
+[h2] Start from your monthly allowance
+[p] You already pay for a monthly AI token budget. Whatever you do not spend on ordinary work normally just expires. Lobster Agent Trader turns that remainder into an explicit number the agent is allowed to burn, and stops the moment it runs out.
+[li] budget − reserved for real work = tradable allowance
+[li] Every cycle's token spend is recorded, per model and per day
+[li] Unused allowance can carry into the next period
+[button] Skip
+[button] Back
+[button] Next
+[p] Dashboard
+[h1] Turning idle allowance into positions
+[p] Period
+[span] 2026-09
+[p] · engine
+[p] stopped
+[p] · mode
+[span] paper
+[p] · last decision 2026-09-29 15:00
+[a] Agent controls
+[a] Settings
+[p] Tradable allowance
+[p] 1.0M
+[p] budget 6.0M − reserved 5.0M
+[p] Spent
+[p] 137.7K
+[p] 12 cycles today · 2 models
+[p] Allowance utilisation
+[p] 13.8%
+[p] 862.3K tok left · ~4.7K per cycle
+[p] Equity
+[p] $10,000.50
+[p] paper · collateral $9,999.93
+[p] Total P&L
+[p] +$0.50
+[p] unrealised +$0.57
+[p] P&L per 1M tokens
+[p] +$3.64
+[p] 0.0119 USD per decision
+[p] Token ledger
+[h2] Where the allowance went
+[p] The monthly budget minus what is reserved for ordinary work is what the trader may spend. That line is the whole premise of the product.
+[dt] Spent by the trader
+[dd] 137.7K
+[span] 2.3%
+[dt] Still untouched
+[dd] 862.3K
+[span] 14.4%
+[dt] Reserved for real work
+[dd] 5.0M
+[span] 83.3%
+[p] Period
+[span] 2026-09
+[p] (resets on day
+[p] of each month)
+[p] · unused allowance carries into the next period
+[p] Equity
+[h2] Equity curve
+[p] The paper curve comes from local simulation: taker fills only, no order-impact model, no funding. It diverges from live results systematically.
+[span] Not enough data yet
+[p] Positions
+[h2] Open positions
+[a] Manage
+[th] Symbol
+[th] Side
+[th] Size
+[th] Entry
+[th] Mark
+[th] Notional
+[th] Liq.
+[th] uPnL
+[td] BTC
+[span] long
+[td] 0.00298
+[td] 83,876.47
+[td] 84,068.15
+[td] $250.52
+[td] +$0.57
+[p] Runs
+[h2] Recent decisions
+[a] All decisions
+[th] When
+[th] Mode
+[th] Status
+[th] Action
+[th] Symbol
+[th] Tokens
+[th] Cost
+[th] Note
+[td] 3h ago
+[td] paper
+[td] hold
+[td] BTC
+[td] 5,705
+[td] $0.0000
+[td] 3h ago
+[td] paper
+[td] error
+[td] OpenRouter returned HTTP 429 — Provider returned error
+[td] 3h ago
+[td] paper
+[td] hold
+[td] BTC
+[td] 7,992
+[td] $0.0000
+[td] 3h ago
+[td] paper
+[td] error
+[td] OpenRouter returned no text content — finish_reason=length — the model ran out of output budget before writing an answer; raise max output tokens or lower reasoning effort
+[td] 3h ago
+[td] paper
+[td] hold
+[td] BTC
+[td] 13,246
+[td] $0.0000
+[td] 3h ago
+[td] paper
+[td] hold
+[td] BTC
+[td] 10,257
+[td] $0.0000
+[td] 3h ago
+[td] paper
+[td] hold
+[td] BTC
+[td] 3,400
+[td] $0.0000
+[td] 3h ago
+[td] paper
+[td] open
+[td] BTC
+[td] 3,655
+[td] $0.0000
+[p] Ledger
+[h2] Token spend detail
+[p] This is where the unused tokens are actually spent — every decision leaves a row here.
+[p] Token spend · by day
+[span] 137.7K
+[span] tok
+[span] 2026-09-25
+[span] 2026-09-29
+[p] Token spend · by model
+[th] Model
+[th] Calls
+[th] Tokens
+[th] Cost
+[td] claude-sonnet-4-5
+[span] anthropic
+[td] 87.0K
+[td] $0.3443
+[td] inclusionai/ling-3.0-flash-sante:free
+[span] openrouter
+[td] 50.6K
+[td] $0.0000
+[p] Decision outcomes
+[span] blocked
+[span] error
+[span] skipped
+[span] Average per cycle
+[span] 4.7K
+[span] tok ·
+[span] 0.0119
+[span] USD
+[span] Utilisation
+[span] 13.8%
+[p] Orders
+[h2] Recently submitted orders
+[th] When
+[th] Engine
+[th] Symbol
+[th] Side
+[th] Type
+[th] Amount
+[th] Notional
+[th] Fill
+[td] 2026-09-29 14:50
+[td] paper
+[td] BTC
+[td] long
+[td] market
+[td] 0.00298
+[td] $249.95
+[td] 0.00298 @ 83876.47
+[td] 2026-09-29 11:47
+[td] paper
+[td] SOL
+[td] short
+[td] market
+[td] 1.696
+[td] $199.93
+[td] 1.696 @ 117.88
+[td] 2026-09-29 02:47
+[td] paper
+[td] ETH
+[td] short
+[td] market
+[td] 0.0014
+[td] $120.00
+[td] 0.0014 @ 2245.00
+[td] 2026-09-28 22:17
+[td] paper
+[td] BTC
+[td] long
+[td] market
+[td] 0.0014
+[td] $210.00
+[td] 0.0014 @ 83990.00
+[td] 2026-09-28 08:47
+[td] paper
+[td] BTC
+[td] long
+[td] market
+[td] 0.0014
+[td] $120.00
+[td] 0.0014 @ 83990.00
+[td] 2026-09-27 10:17
+[td] paper
+[td] ETH
+[td] short
+[td] market
+[td] 0.0014
+[td] $210.00
+[td] 0.0014 @ 2245.00
+[td] 2026-09-26 16:17
+[td] paper
+[td] BTC
+[td] long
+[td] market
+[td] 0.0014
+[td] $210.00
+[td] 0.0014 @ 83990.00
+[td] 2026-09-26 02:47
+[td] paper
+[td] BTC
+[td] long
+[td] market
+[td] 0.0014
+[td] $120.00
+[td] 0.0014 @ 83990.00
+[span] Lobster Agent Trader
+[p] Give the AI token allowance you never spend to a trading agent that keeps books and explains itself.
+[a] Dashboard
+[a] Settings
+[a] Token ledger
+[a] Positions
+[p] Reference
+[a] Agent Kit
+[a] API keys
+[p] Experimental software · live orders and withdrawals cannot be reversed · prove a strategy on testnet before going anywhere near mainnet
+[span] Local-first · credentials never persisted

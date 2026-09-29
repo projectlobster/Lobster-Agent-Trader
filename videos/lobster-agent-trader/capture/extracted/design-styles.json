@@ -1,0 +1,217 @@
+{
+  "typography": [
+    {
+      "role": "heading",
+      "fontFamily": "Clash Grotesk",
+      "fontSize": "34px",
+      "fontWeight": "400",
+      "lineHeight": "38.76px",
+      "letterSpacing": "-0.748px",
+      "color": "#12101C",
+      "sampleText": "Start from your monthly allowance"
+    },
+    {
+      "role": "display",
+      "fontFamily": "Clash Grotesk",
+      "fontSize": "32px",
+      "fontWeight": "400",
+      "lineHeight": "35.84px",
+      "letterSpacing": "-0.768px",
+      "color": "#12101C",
+      "sampleText": "Turning idle allowance into positions"
+    },
+    {
+      "role": "body",
+      "fontFamily": "Clash Grotesk",
+      "fontSize": "22px",
+      "fontWeight": "500",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "color": "#12101C",
+      "sampleText": "1.0M"
+    },
+    {
+      "role": "link",
+      "fontFamily": "Clash Grotesk",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "letterSpacing": "normal",
+      "color": "#12101C",
+      "sampleText": "Lobster Agent Trader"
+    }
+  ],
+  "spacing": {
+    "observed": [
+      1,
+      3,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      20,
+      24,
+      36,
+      40,
+      64
+    ],
+    "baseUnit": 4
+  },
+  "radius": [
+    "2px"
+  ],
+  "shadows": [],
+  "buttons": [
+    {
+      "label": "DARK",
+      "background": "transparent",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#5F5B6B",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "border": "0px solid rgb(95, 91, 107)",
+      "boxShadow": "none",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "height": "16.5px"
+    },
+    {
+      "label": "Open Console",
+      "background": "#12101C",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#F2F0F3",
+      "padding": "6px 14px",
+      "borderRadius": "2px",
+      "border": "0px solid rgb(242, 240, 243)",
+      "boxShadow": "none",
+      "fontSize": "13px",
+      "fontWeight": "500",
+      "height": "31.5px"
+    },
+    {
+      "label": "How it works",
+      "background": "transparent",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#12101C",
+      "padding": "6px 14px",
+      "borderRadius": "2px",
+      "border": "0px solid rgb(18, 16, 28)",
+      "boxShadow": "none",
+      "fontSize": "13px",
+      "fontWeight": "500",
+      "height": "31.5px"
+    },
+    {
+      "label": "button",
+      "background": "#12101C",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#12101C",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "border": "0px solid rgb(18, 16, 28)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "4px"
+    },
+    {
+      "label": "Back",
+      "background": "#FFFFFF",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#12101C",
+      "padding": "6px 14px",
+      "borderRadius": "2px",
+      "border": "1px solid rgba(18, 16, 28, 0.16)",
+      "boxShadow": "none",
+      "fontSize": "13px",
+      "fontWeight": "500",
+      "height": "33.5px"
+    }
+  ],
+  "cards": [],
+  "nav": {
+    "label": "navigation",
+    "background": "#F2F0F3",
+    "backgroundImage": "",
+    "backdropFilter": "",
+    "color": "#12101C",
+    "padding": "0px",
+    "borderRadius": "0px",
+    "border": "0px solid rgb(18, 16, 28)",
+    "boxShadow": "none",
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "height": "72px"
+  },
+  "chips": [],
+  "statCells": [],
+  "tabs": [
+    {
+      "label": "1.0M",
+      "background": "transparent",
+      "color": "#12101C",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "border": "0px solid rgb(18, 16, 28)",
+      "boxShadow": "none",
+      "fontSize": "22px",
+      "fontWeight": "500",
+      "height": "27.5px"
+    },
+    {
+      "label": "budget 6.0M − reserved 5",
+      "background": "transparent",
+      "color": "#8D8997",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "border": "0px solid rgb(141, 137, 151)",
+      "boxShadow": "none",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "height": "33px"
+    },
+    {
+      "label": "13.8%",
+      "background": "transparent",
+      "color": "#3A2ED0",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "border": "0px solid rgb(58, 46, 208)",
+      "boxShadow": "none",
+      "fontSize": "22px",
+      "fontWeight": "500",
+      "height": "27.5px"
+    },
+    {
+      "label": "+$0.50",
+      "background": "transparent",
+      "color": "#15803D",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "border": "0px solid rgb(21, 128, 61)",
+      "boxShadow": "none",
+      "fontSize": "22px",
+      "fontWeight": "500",
+      "height": "27.5px"
+    }
+  ],
+  "backgrounds": [],
+  "glass": [
+    {
+      "backdropFilter": "blur(8px)",
+      "background": "oklab(0.162204 0.0115641 -0.0290087 / 0.6)",
+      "border": "0px solid rgb(18, 16, 28)",
+      "borderRadius": "0px",
+      "boxShadow": "",
+      "area": 2073600
+    }
+  ]
+}

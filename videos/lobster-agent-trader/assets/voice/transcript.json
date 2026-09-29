@@ -1,0 +1,50 @@
+[
+  {
+    "text": "Self",
+    "start": 0.06,
+    "end": 0.22,
+    "id": "w0"
+  },
+  {
+    "text": "hosted,",
+    "start": 0.28,
+    "end": 0.81,
+    "id": "w1"
+  },
+  {
+    "text": "bring",
+    "start": 0.86,
+    "end": 1.15,
+    "id": "w2"
+  },
+  {
+    "text": "your",
+    "start": 1.15,
+    "end": 1.35,
+    "id": "w3"
+  },
+  {
+    "text": "own",
+    "start": 1.42,
+    "end": 1.62,
+    "id": "w4"
+  },
+  {
+    "text": "keys",
+    "start": 1.62,
+    "end": 1.89,
+    "id": "w5"
+  },
+  {
+    "text": "on",
+    "start": 1.89,
+    "end": 2.02,
+    "id": "w6"
+  },
+  {
+    "text": "GitHub.",
+    "start": 2.02,
+    "end": 2.6,
+    "id": "w7"
+  }
+]
