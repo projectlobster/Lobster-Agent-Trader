@@ -490,6 +490,28 @@ an explicit choice, that wins.
 
 ---
 
+## Brand assets
+
+`docs/brand/` holds the exported mark. Regenerate with `npm run export:logo` — the geometry is
+read from `src/components/ui/Brand.tsx`, so the files cannot drift from what the app renders.
+
+| File | Use |
+|---|---|
+| `lobster-mark-light.svg` / `-dark.svg` | The mark alone, transparent background |
+| `lobster-mark-light-bg.svg` / `-dark-bg.svg` | The mark on its canvas colour, for places without transparency |
+| `lobster-mark-32/64/128/256/512.png` | Raster sizes, transparent |
+| `lobster-lockup-light-1200.png` / `-dark-1200.png` | Mark plus name, for headers and social previews |
+
+The mark is `currentColor` plus the app's `--tint-cyan` (`#7ff0e2`), so the two themes are just
+the ink colour it sits on: `#12101c` on light, `#f2f0f3` on dark. Clear space around the mark
+should be at least a quarter of its height.
+
+The wordmark in the lockups is set in Helvetica rather than Clash Grotesk, because Fontshare's
+licence covers using the font in a site but not redistributing the file, and ImageMagick
+collapses SVG `<text>` letter-spacing anyway. The live app uses Clash Grotesk.
+
+---
+
 ## Reference
 
 - Lighter Agent Kit: <https://github.com/elliottech/lighter-agent-kit>

@@ -6,26 +6,26 @@
 
 ### 1. The problem
 
-Every few months, millions of developers and researchers receive a fresh block of AI tokens
-from their provider. Some of it gets used. Most of it expires.
+Every few months, developers and researchers receive a fresh block of AI tokens. Some get
+used. Most expire.
 
 This is not a rounding error. A typical subscription might include a million tokens a month, and
-a working professional might spend a fraction of it on the tasks the subscription was bought
-for. The remainder does not roll over, does not cash out, and does not warn you on the way out.
-It simply evaporates on a schedule nobody set for this purpose.
+a working professional might spend a fraction of it on the tasks it was bought for. The
+remainder does not roll over, does not cash out, and does not warn you on the way out. It
+evaporates on a schedule nobody set for this purpose.
 
 The rational response is to not think about it. Which is precisely why it is worth a system.
 
 There is a second, less obvious waste. Financial models that run continuously — a risk engine, an
-allocation strategy, a hedging routine — are exactly the kind of workload that is too small to
-justify a human's attention and too repetitive for a human to do well. You do not want to wake up
-and check whether the rebalancing ran. You want it to have run, to have logged what it decided,
-and to have refused to act when the numbers did not justify acting.
+allocation strategy, a hedging routine — are exactly the kind of workload too small to justify a
+human's attention and too repetitive for a human to do well. You do not want to wake up and
+check whether the rebalancing ran. You want it to have run, to have logged what it decided, and
+to have refused to act when the numbers did not justify acting.
 
-Lobster Agent Trader is built for both cases at once. It takes an allowance you were going to
-lose anyway, gives it a ledger and a ceiling, and puts it to work running a disciplined trading
-loop on Lighter — an exchange with a public API, published documentation, and testnets you can
-prove a strategy on before it touches real money.
+Lobster Agent Trader is built for both. It takes an allowance you were going to lose anyway,
+gives it a ledger and a ceiling, and puts it to work running a disciplined trading loop on
+Lighter — an exchange with a public API, published documentation, and testnets you can prove a
+strategy on before it touches real money.
 
 ### 2. What it is
 
@@ -78,29 +78,26 @@ to the tools you already use it for. The difference is the tradable allowance:
 tradable allowance = monthly token budget − reserved for real work + carry-over
 ```
 
-The reserved portion is never touched. Not by a bug, not by a runaway loop, not by a clever
+The reserved portion is never touched — not by a bug, not by a runaway loop, not by a clever
 model. It is not available.
 
-Carry-over is optional. When enabled, whatever the trader does not spend rolls into the next
-period, so an uneventful month is not wasted. Changing the monthly budget applies to the current
-period immediately; past periods stay frozen, so the history remains internally consistent.
+Carry-over is optional. When enabled, unspent allowance rolls into the next period, so an
+uneventful month is not wasted. Changing the monthly budget applies to the current period
+immediately; past periods stay frozen, so the history stays internally consistent.
 
 The projection of "what will the next cycle cost" is worth a note, because the obvious
-implementation is wrong. Reading `maxOutputTokens` and treating it as a per-call cost would mean
-assuming every call consumes its entire ceiling. The system would then stop while a substantial
-budget remained, which is the opposite of the intent. Instead, the projection uses the **average
-output of recent calls**, and estimates input separately by character type — roughly one token
-per CJK character, roughly four characters per token for Latin text.
+implementation is wrong. Reading `maxOutputTokens` as a per-call cost assumes every call consumes
+its entire ceiling, so the engine would stop while a substantial budget remained. Instead it uses
+the **average output of recent calls**, and estimates input by character type — roughly one token
+per CJK character, four characters per token for Latin text.
 
-Two limits are checked *before* the model is ever called: the projected allowance, and the daily
-cycle cap. This matters more than it sounds. If either were checked after the call, the engine
-would learn it was not allowed to run only by spending a full cycle's tokens finding out — and
-then it would do it again on the next interval. Pre-flight checking means a stopped engine costs
-nothing.
+Two limits are checked *before* the model is called: the projected allowance and the daily cycle
+cap. This matters more than it sounds. Checked afterwards, the engine would learn it was not
+allowed to run only by spending a full cycle's tokens finding out — then do it again next
+interval. Pre-flight checking means a stopped engine costs nothing.
 
-Cooldowns are deliberately exempt from this treatment, and the reason is instructive: a cooldown
-is per-symbol. The model may pick a different symbol this cycle, so refusing the whole cycle
-because BTC is cooling down would be wrong.
+Cooldowns are exempt, instructively: a cooldown is per-symbol, and the model may pick a
+different one, so refusing the whole cycle because BTC is cooling would be wrong.
 
 ### 5. How a decision is made
 
@@ -108,16 +105,15 @@ because BTC is cooling down would be wrong.
 loop records a `skipped` run and stops, without touching the market data APIs.
 
 **The market snapshot.** Order book and depth, a candle series, funding rate, contract precision,
-and minimum order size for every allow-listed symbol. This is gathered through the official
-Lighter agent kit and compressed into compact text before it reaches the prompt. Token efficiency
-is not a secondary concern here — a verbose snapshot would eat the budget that was supposed to be
-trading it.
+and minimum order size for every allow-listed symbol — gathered through the official Lighter
+agent kit and compressed into compact text before it reaches the prompt. A verbose snapshot would
+eat the budget that was supposed to be trading it.
 
 One detail that took measurement to get right: **funding rate is read from Lighter's own data,
-not from Binance's.** Cross-exchange rates do not even reliably share a sign. During development,
+not from Binance's.** Cross-exchange rates do not even reliably share a sign — during development
 SOL was at -0.0021% on Binance (shorts pay) and +0.0064% on Lighter (longs pay). Reading the
-wrong row inverts the carry signal handed to the model, and a model handed an inverted carry
-signal will confidently reach the wrong conclusion.
+wrong row inverts the carry signal handed to the model, and a model handed an inverted signal
+will confidently reach the wrong conclusion.
 
 **The decision.** The model must return strict JSON with a fixed shape:
 
@@ -134,25 +130,24 @@ signal will confidently reach the wrong conclusion.
 }
 ```
 
-A successful response must be parsed, validated, and *recorded* — the actual token usage goes
-into the ledger regardless of what happens next. If validation fails, the zod errors are fed back
-to the model for a repair attempt, at most twice. A second failure is recorded as an `error` with
-the provider's own diagnostic attached, because "the model produced malformed output" and "the
-model ran out of output budget mid-thought" are different problems and deserve different
-records.
+A successful response is parsed, validated, and *recorded* — the actual token usage goes into the
+ledger regardless of what happens next. If validation fails, the zod errors are fed back for a
+repair attempt, at most twice. A second failure is recorded as an `error` with the provider's own
+diagnostic, because "the model produced malformed output" and "the model ran out of output budget
+mid-thought" are different problems and deserve different records.
 
 **The guardrails.** See below.
 
 **Execution.** Local code converts `size_usd` into a base amount, rounding down to the market's
 precision, and passes an argument array to the kit. The model never touches command-line
-arguments — it emits structured values, and a different piece of code builds the command. There
-is no path from prompt text to shell invocation, which closes off a class of prompt-injection
-attack that matters more here than in most applications.
+arguments — it emits structured values, and separate code builds the command. There is no path
+from prompt text to shell invocation, which closes off a class of prompt-injection attack that
+matters more here than in most applications.
 
-**Booking.** Orders are recorded at their **actual fill** — filled size multiplied by fill price —
-not at the size that was requested. A zero fill is recorded as `blocked` with a reason. A partial
-fill is recorded at the quantity that actually traded. This is the rule that keeps the ledger
-honest: book by intent and it will slowly fill with orders that no position supports.
+**Booking.** Orders are recorded at their **actual fill** — filled size × fill price — not at the
+size requested. A zero fill is recorded as `blocked` with a reason; a partial fill is recorded at
+the quantity that actually traded. Book by intent and the ledger slowly fills with orders no
+position supports.
 
 ### 6. Guardrails, and why they clamp
 
@@ -212,31 +207,28 @@ look like a deliberate halt.
 
 ### 8. Where your credentials live
 
-The private key is the thing you should be most careful about, so the handling is worth stating
-plainly.
+The private key is the thing to be most careful about, so the handling is worth stating plainly.
 
 **The Lighter private key is never stored in the database.** It is written to
 `~/.lighter/lighter-agent-kit/credentials`, the file the official agent kit reads, with
-owner-only permissions. You can paste it into the Settings page, or write the file yourself — both
-paths are supported, and they are the same path. The API reports only whether a key is present,
-never its value. The browser never receives it.
+owner-only permissions. You can paste it into Settings or write the file yourself — both are the
+same path. The API reports only whether a key is present, never its value, and the browser never
+receives it.
 
 **The model API key is never echoed back.** It can live in `.env.local` or in the local database;
 either way the interface returns `apiKeySet: true` and nothing more.
 
-**A key belongs to one provider.** The Settings-stored key belongs to whichever provider was
-selected when it was saved. Probing a different provider without its own environment variable is
-refused with an explanation, rather than sending one vendor's secret to a competitor's API. This
-was a real vulnerability found in review, and it now has four regression tests.
+**A key belongs to one provider.** The stored key belongs to whichever provider was selected when
+it was saved. Probing a different provider without its own environment variable is refused with an
+explanation, rather than sending one vendor's secret to a competitor's API. This was a real
+vulnerability found in review; it now has four regression tests.
 
-**The database is owner-only.** The `data/` directory is `0700`; the database and its WAL and SHM
-siblings are `0600`. This is best effort — on a filesystem that refuses `chmod`, default
-permissions persist.
+**The database is owner-only** — `data/` is `0700`, the database and its WAL and SHM siblings are
+`0600`. This is best effort: on a filesystem that refuses `chmod`, default permissions persist.
 
-What the file permissions do *not* cover: the model API key in the database is plaintext, because
-`node:sqlite` has no encryption. `0700` blocks other users on the same machine. It does not block
-a disk snapshot, a cloud backup, or a container volume. If that matters to you, put the key in
-`.env.local` instead.
+What those permissions do *not* cover: the model API key in the database is plaintext, because
+`node:sqlite` has no encryption. `0700` blocks other users on the same machine, not a disk
+snapshot, a cloud backup, or a container volume. If that matters, put the key in `.env.local`.
 
 ### 9. Deploying it yourself
 
