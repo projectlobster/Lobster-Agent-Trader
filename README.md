@@ -14,6 +14,12 @@ the app binds to loopback by default.
 allowance ledger → market snapshot → LLM decision → guardrails → order → ledger
 ```
 
+> **Live demo:** <https://projectlobster.github.io/Lobster-Agent-Trader/>
+>
+> A static preview of the landing page. The console is not part of it — a static
+> host cannot run a Node server, the Python agent kit, or a database, and
+> hosting the console publicly would be unsafe regardless.
+
 ---
 
 ## Screenshots
@@ -84,12 +90,30 @@ LIGHTER_ACCOUNT_INDEX=0
 LIGHTER_API_KEY_INDEX=0
 ```
 
-Create one at <https://app.lighter.xyz/apikeys>. The Settings form writes that same file and
+Create one at <https://app.lighter.xyz/apikeys> — or, for Robinhood Lighter, at
+<https://robinhoodchain.lighter.xyz/apikeys>. The Settings form writes that same file and
 sets its permissions: it never touches the database and never echoes the value back to the
 browser. Leave the field empty to keep the stored key; use Clear to remove it.
 
 > Everything works without a private key — market data and paper trading included. Only live
 > orders need one.
+
+### Deployments
+
+All four are selectable under **Settings → Lighter agent kit → Deployment**, or pinned with
+`LIGHTER_HOST`:
+
+| Deployment | URL |
+|---|---|
+| Lighter mainnet | `https://mainnet.zklighter.elliot.ai` |
+| Lighter testnet | `https://testnet.zklighter.elliot.ai` |
+| Robinhood Lighter | `https://api.rh.lighter.xyz` |
+| Robinhood Lighter testnet | `https://api.rh-testnet.lighter.xyz` |
+
+**Credentials are per-deployment.** Account indices and API keys are issued for a specific
+network, so switching deployments means switching your credential bundle as a whole. Caches are
+keyed per host and the response cache is cleared on a deployment change, so a stale symbol map
+cannot survive the switch.
 
 ---
 
@@ -410,6 +434,7 @@ npm run engine -- --interval 300         # headless loop
 npm test           # unit tests
 npm run typecheck
 npm run build
+npm run build:demo # static landing page for GitHub Pages → out/
 ```
 
 `npm test` runs two layers:

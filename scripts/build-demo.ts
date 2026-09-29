@@ -61,8 +61,8 @@ function main() {
 
     // The console is not part of this build, so every link to it would 404.
     // Point them at the repository and reword the buttons, rather than shipping
-    // a demo whose call to action leads nowhere. Some hrefs carry basePath and
-    // some are plain (they come from the RSC payload rather than markup), so
+    // a demo whose call to action leads nowhere. Some hrefs carry assetPrefix
+    // and some are plain (they come from the RSC payload rather than markup), so
     // both forms are replaced and the result is verified.
     const index = join(OUT, "index.html");
     const html = readFileSync(index, "utf8");
